@@ -7,6 +7,8 @@ import SetFlights from './view/pages/setFlights/SetFlights';
 import FlightSearch from './view/pages/company/CompanyHome';
 import FlightActions from './view/pages/company/FlightActions';
 import AddFlightForm from './view/pages/setFlights/AddFlightForm';
+import FlightSearchResults from './view/pages/FlightSearchResults/FlightSearchResults';
+import FlightDetails from './view/pages/FlightDetails/FlightDetails';
 
 function ErrorBoundary() {
 	return (
@@ -41,19 +43,30 @@ export const router = createBrowserRouter([
 				element: <SetFlights />,
 			},
 			{
-                path: 'flight-search',
-                element: <FlightSearch />,
-            },
-            {
-                path: 'flight-actions',
-                element: <FlightActions />,
-            },
-            {
-                path: 'add-flight',
-                element: <AddFlightForm
-				onSubmit={(flightData) => console.log(flightData)} 
-				onCancel={() => console.log('Cancel button clicked')} />,
-            }
+				path: 'flight-search',
+				element: <FlightSearch />,
+				children: [
+					{
+						path: 'results',
+						element: <FlightSearchResults />,
+					},
+					{
+						path: 'results/:flightId',
+						element: <FlightDetails />,
+					}
+				],
+
+			},
+			{
+				path: 'flight-actions',
+				element: <FlightActions />,
+			},
+			{
+				path: 'add-flight',
+				element: <AddFlightForm
+					onSubmit={(flightData) => console.log(flightData)}
+					onCancel={() => console.log('Cancel button clicked')} />,
+			}
 		],
 	},
 ]);
